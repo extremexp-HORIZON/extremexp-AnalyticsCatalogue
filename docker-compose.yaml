@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+
+  data_augmentation_service:
+    container_name: data_augmentation_service
+    build:
+      context: ./services/policy-based-data-augmentation  
+    image: policy-based-data-augmentation
+    ports:
+      - "9010:8000"
+      - "5005:5005"
+    volumes:
+      - ./services/data_augmentation/resources:/app/resources
+    networks:
+      - catalogue_network
+    labels:
+      - "is_api_service=true"
+    runtime: nvidia
+
+  analytics_catalogue:
+    container_name: analytics_catalogue
+    build:
+      context: .
+    ports:
+      - "9000:9000"
+    networks:
+      - catalogue_network
+
+  feature_discovery_service:
+    container_name: feature-discovery-runner
+    ports:
+      - "9020:8080"
+    depends_on:
+      - neo4j
+    build:
+      context: ./assets/data_selection
+    restart: always
+    volumes:
+      - ./assets/data_selection/src:/src
+      - ./assets/data_selection/data:/data
+      - ./assets/data_selection/results:/results
+    environment:
+      - NEO4J_BOLT_URL=bolt://neo4j:7687    
+    networks:
+      - catalogue_network
+    labels:
+      - "is_api_service=true"
+ 
+  neo4j:
+    container_name: feature-discovery-neo4j
+    image: neo4j:5.3.0-enterprise
+    hostname: feature-discovery-neo4j
+    volumes:
+      - ./neo4j-db:/neo4j-db
+      - ./neo4j-data:/data
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=none
+      - NEO4J_dbms_security_auth__enabled=false
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4J_dbms_default__database=lake
+    networks:
+      - catalogue_network
+    labels:
+      - "is_api_service=false"
+      - "exposed_service=7474"
+
+networks:
+  catalogue_network:
+    external: true
+    driver: bridge
+    name: catalogue_network
