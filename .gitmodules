@@ -1,3 +1,6 @@
 [submodule "services/data_integration"]
 	path = services/data_integration
 	url = git@github.com:extremexp-HORIZON/QueryMLER.git
+[submodule "libraries/continual_ml"]
+	path = libraries/continual_ml
+	url = https://github.com/w-jamil/extreme-xp.git
