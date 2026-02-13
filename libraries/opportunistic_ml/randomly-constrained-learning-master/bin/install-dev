@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -e
+
+filename=$(realpath "$0")
+
+cd "$(dirname $filename)/.."
+
+if [ "$1" = "-b" ] || [ "$1" = "--build" ]; then
+  build_lock=Y
+elif [ "$1" != "" ]; then
+  echo "Usage: $0 [-b|--buiild]" >&2
+  exit 1
+fi
+
+echo Checking code...
+ruff check  --target-version py312 rcl
+if [ $build_lock ]; then
+  echo Generating pylock.toml...
+  python -m pip lock -e .
+fi
+
+echo ...done!  Installing rcl...
+pip install -e .
+
+echo ...done!  Building docs...
+bin/mk-doc
+
+echo ...done!  Ciao!

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo Running pdoc...
+L_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd $L_DIR
+cd ..
+python -m pdoc -o public --math -d numpy ./rcl
+echo ...done! Converting to gitlab flavoured markdown...
+
+htom() {
+  pandoc --to=markdown-smart-simple_tables-multiline_tables-grid_tables-fenced_code_attributes-inline_code_attributes-raw_attribute-pandoc_title_block-yaml_metadata_block\
+ --columns=9999\
+ --standalone "$@.html" -o "$@.md"
+}
+
+cd public
+htom rcl
+cd rcl
+htom rcl
+htom dl
+htom rs
+htom doc
+echo ...done!  Documentation is located in ./public

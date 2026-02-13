@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+from sys import argv
+from pathlib import Path
+
+if len(argv) != 3:
+    print('Usage:', argv[0], 'raw_results_file', 'ds_name')
+    exit(1)
+
+ds_name = argv[2]
+
+lines = Path(argv[1]).read_text().split('\n')
+
+results_table = 'dataset name, cost ratio, fpr_train, fnr_train, fpr_test, fnr_test\n'
+params_table = 'dataset name, cost ratio, epoch, loss parameters (a,b), resampling method\n'
+
+p_train = p_test = 0
+
+for line,next_line in zip(lines,lines[1:]):
+    if '=' in line:
+        spl = line.split('=')[1]
+        num = float(spl.split('$')[0])
+        if 'train' in line:
+            p_train = num
+        else:
+            p_test = num
+    elif 'cost ratio' in line:
+        cost_ratio = line.split(' ')[-1]
+    elif '--' in line:
+        res_strs = next_line.split('|')[-5:-1]
+        print(res_strs)
+        fp_train, fn_train, fp_test, fn_test = (float(s) for s in res_strs)
+        fpr_train = str(fp_train/(1-p_train))
+        fnr_train = str(fn_train/p_train)
+        fpr_test = str(fp_test/(1-p_test))
+        fnr_test = str(fn_test/p_test)
+        
+        epoch = str(int(next_line.split('|')[1]))
+        loss_param = next_line.split('|')[4]
+        resampling_method = next_line.split('|')[5]
+        
+        results_table += ds_name + ', '+ cost_ratio + ', ' + fpr_train + ', ' +\
+                         fnr_train + ', ' + fpr_test + ', ' + fnr_test + '\n'
+        
+        params_table += ds_name + ', ' + cost_ratio + '\n' + epoch + ', ' +\
+                        loss_param + ', ' + resampling_method + '\n'
+
+
+Path(ds_name + '_res.csv').write_text(results_table)
+Path(ds_name + '_par.csv').write_text(params_table)

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+[build.targets.sdist]
+include = [
+  "rcl/*.py",
+]
+[tool.hatch.metadata]
+allow-direct-references = true
+[project]
+name = "rcl"
+version = "0.0.1"
+authors = [
+  { name="George Lee", email="glee@bournemouth.ac.uk"},
+]
+dependencies = [
+    "rs @ git+ssh://git@colab-repo.intracom-telecom.com/colab-projects/extremexp/experiment-modelling/analytics-task-library/constraint-aware-ml/util/caml-resampling",
+    "dl @ git+ssh://git@colab-repo.intracom-telecom.com/colab-projects/extremexp/experiment-modelling/analytics-task-library/constraint-aware-ml/util/caml-data-loading",
+    "olj @ git+ssh://git@gitlab.com/georgelee/olj",
+    "flax[cuda12]",
+    "jax[cuda12]",
+    "numpy",
+    "matplotlib"
+]
+description = "Library for training and benchmarking models targetting dynamically varying constraints"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICENSE"]

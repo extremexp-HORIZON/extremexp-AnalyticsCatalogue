@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+filename=$(realpath "$0")
+cd "$(dirname $filename)/../notebooks"
+
+jupyter nbconvert losses_for_costs.ipynb --to=latex --template-file=losses_for_costs.tplx
+mkdtex losses_for_costs
