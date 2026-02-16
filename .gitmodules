@@ -4,3 +4,9 @@
 [submodule "libraries/continual_ml"]
 	path = libraries/continual_ml
 	url = https://github.com/w-jamil/extreme-xp.git
+[submodule "services/data_augmentation/src/data_augmentation_time_series/mts-gan"]
+	path = services/data_augmentation/src/data_augmentation_time_series/mts-gan
+	url = https://github.com/Fundacio-i2CAT/MTS-GAN.git
+[submodule "services/data_augmentation/src/data_augmentation_time_series/mtime-gan"]
+	path = services/data_augmentation/src/data_augmentation_time_series/mtime-gan
+	url = https://github.com/Fundacio-i2CAT/MTime-GAN.git
