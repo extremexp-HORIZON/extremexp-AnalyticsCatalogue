@@ -23,6 +23,7 @@ The Analytics Catalogue provides a unified interface for specialized services an
 | **Continual ML** | Implements continual learning strategies to adapt models over time. | `libraries/continual_ml` |
 | **Opportunistic ML** | Constraint-aware ML models (e.g., performance, topology) designed to optimize learning under dynamic system conditions.. | `libraries/opportunistic_ml` |
 | **Meta-Learning** |Implements meta-learning techniques that enable models to learn how to learn, improving fast adaptation to new tasks or evolving data distributions. | `libraries/metalearning_ml` |
+| **Scalable ML** |Implements scalable-ml techniques that enable to train scalable machine learning models.| `libraries/scalable_ml` |
 
 ​
 > **Note:** Each service and library contains a dedicated `README.md` with specific configuration instructions and experimentation examples.
