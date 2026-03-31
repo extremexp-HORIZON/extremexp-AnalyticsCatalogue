@@ -12,7 +12,7 @@ The Analytics Catalogue provides a unified interface for specialized services an
 | Service | Description | Path |
 | :--- | :--- | :--- |
 | **Automated Dataset Selection** | Recommends optimized datasets for ML tasks and automated feature augmentation. | `services/data_selection` |
-| **Analysis-aware Data Integration** | Supervised entity resolution using Language Models (LM) and GPU acceleration. | `services/data_integration` |
+| **Analysis-aware Data Integration** [[GitHub Repo]]([https://www.example.com](https://github.com/extremexp-HORIZON/QueryMLER)) | Supervised entity resolution using Language Models (LM) and GPU acceleration. | `services/data_integration` |
 | **Simulation-driven Augmentation** | Generates synthetic data to improve ML model accuracy. | `services/data_augmentation` |s
 
 
